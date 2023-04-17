@@ -1,7 +1,9 @@
-from enc import encrypt, decrypt, isValidKey
+from enc import encrypt, decrypt, isValidKey, generateKey
 from sys import exit
 from dynamics import printEquals, clear
 from random import randint
+from pyperclip import copy
+
 try:
     from colorama import init, Fore, Back, Style
 except Exception as e:
@@ -33,27 +35,26 @@ while True:
         op = input(f"{Fore.GREEN}{Style.BRIGHT}>>{Style.RESET_ALL}")
         if op == "1":
             txt = input("Type text to Encrypt:")
+            password = input("Type key for encryption:")
             print(f"{Fore.GREEN}{Style.BRIGHT}ENCRYPTED TEXT{Style.RESET_ALL}")
+            if password == "":
+                print(f"{Fore.RED}{Style.BRIGHT}WARNING: No password entered{Style.RESET_ALL}")
+            else:
+                key = generateKey(password)
             txt2 = txt.encode()
-            enc = encrypt(txt2)
-            print(enc[0].decode())
-            txt2 = txt.encode()
-            print(f"{Fore.RED}{Style.BRIGHT}KEY{Style.RESET_ALL}\n{enc[1].decode()}")
+            enc = encrypt(txt2, key)
+            print(enc.decode())
+            copy(enc.decode())
             input()
             clear()
         elif op == "2":
             txt = input("Type text to decode:")
             key = input("Type key for decoding:")
-            if isValidKey(key):
-                pass
-            else:
-                print(f"{Fore.RED}{Style.BRIGHT}Key entered is not valid{Style.RESET_ALL}")
-                clear()
-                continue
             txt2 = txt.encode()
             enc = decrypt(txt2, key)
             print(f"{Fore.GREEN}{Style.BRIGHT}DECRYPTED TEXT{Style.RESET_ALL}")
             print(enc.decode())
+            copy(enc.decode())
             input()
             clear()
         else:
