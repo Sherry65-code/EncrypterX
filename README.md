@@ -9,7 +9,7 @@ It uses Cryptography to encrypt the text. Works for ASCII only.
 ## Packages to install
 
 ```bash
-pip install cryptography colorama
+pip install cryptography colorama pyperclip
 ```
 
 ## How to setup up
